@@ -18,7 +18,7 @@ class _HomeState extends State<Home> {
   List<CategoryModel> categories = <CategoryModel>[];
   List<ArticleModel> articles = <ArticleModel>[];
 
-  bool _loading = false;
+  bool _loading = true;
   //var articles;
 
   @override
@@ -34,7 +34,7 @@ class _HomeState extends State<Home> {
     articles = newsClass.news;
     print("Number of articles: ${articles.length}");
     setState(() {
-      _loading = true;
+      _loading = false;
     });
   }
 
