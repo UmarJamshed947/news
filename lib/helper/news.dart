@@ -22,12 +22,12 @@ class News {
         if (element["urlToImage"] != null && element['description'] != null) {
           ArticleModel articleModel = ArticleModel(
             title: element['title'],
-            author: element['author'],
+            author: element['author']??"",
             description: element['description'],
             url: element['url'],
             urlToImage: element['urlToImage'],
             // publishedAt: element['publishedAt'],
-            content: element['content'],
+            content: element['content']??"",
           );
           news.add(articleModel);
         }
@@ -44,6 +44,8 @@ class CategoryNewsClass {
     String url =
         "https://newsapi.org/v2/top-headlines?country=us&category=$category&apiKey=8d935895c40544a09cddc83aa471ebf2";
     Uri uri = Uri.parse(url);
+
+    print(url);
     var response = await http.get(uri);
 
     print("Response Status Code: ${response.statusCode}");
@@ -56,12 +58,12 @@ class CategoryNewsClass {
         if (element["urlToImage"] != null && element['description'] != null) {
           ArticleModel articleModel = ArticleModel(
             title: element['title'],
-            author: element['author'],
+            author: element['author']??"",
             description: element['description'],
             url: element['url'],
             urlToImage: element['urlToImage'],
             // publishedAt: element['publishedAt'],
-            content: element['content'],
+            content: element['content']??"",
           );
           news.add(articleModel);
         }
