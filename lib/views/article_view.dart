@@ -22,11 +22,11 @@ class _ArticleViewState extends State<ArticleView> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Text(
-                "Flutter",
+                "News",
                 style: TextStyle(color: Colors.black),
               ),
               Text(
-                "News",
+                "Buzz",
                 style: TextStyle(color: Colors.blue),
               ),
             ],
