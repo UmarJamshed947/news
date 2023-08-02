@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:news/models/article_model.dart';
+import '../helper/news_api.dart';
+import '../widgets/blog_tile.dart';
 
-import '../helper/news.dart';
-import 'article_view.dart';
 
 class CategoryNews extends StatefulWidget {
 
@@ -11,22 +10,20 @@ class CategoryNews extends StatefulWidget {
 
   @override
   State<CategoryNews> createState() => _CategoryNewsState();
-
-
   }
-
-
 
 class _CategoryNewsState extends State<CategoryNews> {
 
   //List<ArticleModel> articles = [];
   bool _loading = true;
   var articles;
+
   @override
   void initState(){
     super.initState();
     getCategoryNews();
   }
+
   getCategoryNews() async {
     CategoryNewsClass newsClass = CategoryNewsClass();
     await newsClass.getCategoryNewsClass(widget.category);
@@ -44,11 +41,11 @@ class _CategoryNewsState extends State<CategoryNews> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text(
-              "Flutter",
+              "News",
               style: TextStyle(color: Colors.black),
             ),
             Text(
-              "News",
+              "Buzz",
               style: TextStyle(color: Colors.blue),
             ),
           ],
@@ -95,49 +92,4 @@ class _CategoryNewsState extends State<CategoryNews> {
   }
 }
 
-class BlogTile extends StatelessWidget {
-  final String imageUrl;
-  final String title;
-  final String desc;
-  final String url;
 
-  BlogTile({
-    required this.imageUrl,
-    required this.title,
-    required this.desc,
-    required this.url,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: (){
-        Navigator.push(context, MaterialPageRoute(builder: (context)
-        => ArticleView(blogUrl:url)));
-      },
-      child: Container(
-        margin: EdgeInsets.only(bottom: 16),
-        child: Column(
-          children: <Widget>[
-            ClipRRect(
-                borderRadius: BorderRadius.circular(6),
-                child: Image.network(imageUrl)),
-            SizedBox(height: 8),
-            Text(
-              title,
-              style: TextStyle(
-                  fontSize: 18,
-                  color: Colors.black87,
-                  fontWeight: FontWeight.w500),
-            ),
-            SizedBox(height: 8),
-            Text(
-              desc,
-              style: TextStyle(color: Colors.black54),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}

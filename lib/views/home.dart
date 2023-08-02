@@ -1,12 +1,11 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:news/helper/data.dart';
-import 'package:news/views/article_view.dart';
-
-import '../helper/news.dart';
+import 'package:news/helper/category_data.dart';
+import '../helper/news_api.dart';
 import '../models/article_model.dart';
 import '../models/category_modal.dart';
-import 'category_view.dart';
+import '../widgets/blog_tile.dart';
+import '../widgets/category_tile.dart';
+
 
 class Home extends StatefulWidget {
   @override
@@ -18,6 +17,7 @@ class _HomeState extends State<Home> {
   List<CategoryModel> categories = <CategoryModel>[];
   List<ArticleModel> articles = <ArticleModel>[];
 
+  //// Flag to indicate if data is being loaded or not
   bool _loading = true;
   //var articles;
 
@@ -28,6 +28,7 @@ class _HomeState extends State<Home> {
     getNews();
   }
 
+  // getNews method is used to fetch news data asynchronously
   getNews() async {
     News newsClass = News();
     await newsClass.getNews();
@@ -46,11 +47,11 @@ class _HomeState extends State<Home> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text(
-              "Flutter",
+              "News",
               style: TextStyle(color: Colors.black),
             ),
             Text(
-              "News",
+              "Buzz",
               style: TextStyle(color: Colors.blue),
             ),
           ],
@@ -71,7 +72,7 @@ class _HomeState extends State<Home> {
                   children: <Widget>[
                     //Categories
                     Container(
-                      height: 70,
+                      height: 110,
                       child: ListView.builder(
                           itemCount: categories.length,
                           shrinkWrap: true,
@@ -107,97 +108,5 @@ class _HomeState extends State<Home> {
   }
 }
 
-class CategoryTile extends StatelessWidget {
-  final String imageUrl;
-  final String categoryName;
-  CategoryTile({required this.imageUrl, required this.categoryName});
 
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        Navigator.push(context,
-        MaterialPageRoute(builder:(context) => CategoryNews(
-        category: categoryName.toLowerCase(),
-        ),
-        ));
-      },
-      child: Container(
-        margin: EdgeInsets.only(right: 16),
-        child: Stack(
-          children: <Widget>[
-            ClipRRect(
-                borderRadius: BorderRadius.circular(6),
-                child: CachedNetworkImage(
-                    imageUrl: imageUrl,
-                    width: 120,
-                    height: 60,
-                    fit: BoxFit.cover)),
-            Container(
-              alignment: Alignment.center,
-              width: 120,
-              height: 60,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(6),
-                  color: Colors.black26),
-              child: Text(
-                categoryName,
-                style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 14,
-                    fontWeight: FontWeight.w500),
-              ),
-            )
-          ],
-        ),
-      ),
-    );
-  }
-}
 
-class BlogTile extends StatelessWidget {
-  final String imageUrl;
-  final String title;
-  final String desc;
-  final String url;
-
-  BlogTile({
-    required this.imageUrl,
-    required this.title,
-    required this.desc,
-    required this.url,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: (){
-        Navigator.push(context, MaterialPageRoute(builder: (context)
-        => ArticleView(blogUrl:url)));
-      },
-      child: Container(
-        margin: EdgeInsets.only(bottom: 16),
-        child: Column(
-          children: <Widget>[
-            ClipRRect(
-                borderRadius: BorderRadius.circular(6),
-                child: Image.network(imageUrl)),
-            SizedBox(height: 8),
-            Text(
-              title,
-              style: TextStyle(
-                  fontSize: 18,
-                  color: Colors.black87,
-                  fontWeight: FontWeight.w500),
-            ),
-            SizedBox(height: 8),
-            Text(
-              desc,
-              style: TextStyle(color: Colors.black54),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
